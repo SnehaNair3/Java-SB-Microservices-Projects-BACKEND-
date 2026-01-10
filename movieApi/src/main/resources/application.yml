@@ -1,0 +1,14 @@
+
+
+spring:
+  datasource:
+    username: root
+    password: Me@sqll123
+    url: jdbc:mysql://localhost:3306/movie_api_db
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    properties:
+      hibernate:
+        format-sql:true

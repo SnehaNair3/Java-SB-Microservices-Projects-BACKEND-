@@ -3,6 +3,7 @@ package com.movieflix.movieApi.controllers;
 
 import com.movieflix.movieApi.dto.MovieDto;
 import com.movieflix.movieApi.entities.Movie;
+import com.movieflix.movieApi.exceptions.EmptyFileException;
 import com.movieflix.movieApi.service.MovieService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -26,7 +27,11 @@ public class MovieController {
     //adding movie to DB
     @PostMapping("/add-movie")
     public ResponseEntity<MovieDto> addMovieHandler(@RequestPart MultipartFile file,
-                                                    @RequestPart String movieDto) throws IOException {
+                                                    @RequestPart String movieDto) throws IOException, EmptyFileException {
+
+        if(file.isEmpty()){
+            throw new EmptyFileException("File is empty! Please send another file");
+        }
         MovieDto dto = convertToMovieDto(movieDto);
 
         return new ResponseEntity<>(movieService.addMovie(dto,file), HttpStatus.CREATED);
